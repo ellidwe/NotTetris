@@ -35,11 +35,11 @@ public class BrickLayout {
             {
                 if(row != brickLayout.length - 1)
                 {
-                    for(int i = 0; i < b.getStart() - b.getEnd() + 1; i++)
+                    for(int i = 0; i < b.getEnd() - b.getStart() + 1; i++)
                     {
                         if(brickLayout[row + 1][b.getStart() + i] == 1)
                         {
-                            for(int j = 0; j < b.getStart() - b.getEnd() + 1; j++)
+                            for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
                             {
                                 brickLayout[row][b.getStart() + j] = 1;
                             }
@@ -49,7 +49,7 @@ public class BrickLayout {
                 }
                 else
                 {
-                    for(int j = 0; j < b.getStart() - b.getEnd() + 1; j++)
+                    for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
                     {
                         brickLayout[row][b.getStart() + j] = 1;
                     }
