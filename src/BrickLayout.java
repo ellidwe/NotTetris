@@ -29,9 +29,32 @@ public class BrickLayout {
     }
 
     public void doOneBrick() {
-        if (bricks.size() != 0) {
-            Brick b = bricks.remove(0);
-            // put this brick into the 2D array
+        if (!bricks.isEmpty()) {
+            Brick b = bricks.removeFirst();
+            for(int row = 0; row < brickLayout.length; row++)
+            {
+                if(row != brickLayout.length - 1)
+                {
+                    for(int i = 0; i < b.getStart() - b.getEnd() + 1; i++)
+                    {
+                        if(brickLayout[row + 1][b.getStart() + i] == 1)
+                        {
+                            for(int j = 0; j < b.getStart() - b.getEnd() + 1; j++)
+                            {
+                                brickLayout[row][b.getStart() + j] = 1;
+                            }
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    for(int j = 0; j < b.getStart() - b.getEnd() + 1; j++)
+                    {
+                        brickLayout[row][b.getStart() + j] = 1;
+                    }
+                }
+            }
         }
     }
 
