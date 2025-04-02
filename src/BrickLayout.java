@@ -43,7 +43,7 @@ public class BrickLayout {
                             {
                                 brickLayout[row][b.getStart() + j] = 1;
                             }
-                            break;
+                            return;
                         }
                     }
                 }
@@ -53,6 +53,7 @@ public class BrickLayout {
                     {
                         brickLayout[row][b.getStart() + j] = 1;
                     }
+                    break;
                 }
             }
         }
