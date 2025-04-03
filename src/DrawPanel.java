@@ -17,12 +17,12 @@ public class DrawPanel extends JPanel implements MouseListener{
 
         long time = System.currentTimeMillis();
 
-        while(!(System.currentTimeMillis() >= time + 500))
-        {
-
-        }
-        time = System.currentTimeMillis();
-        layout.doOneBrick();
+//        while(!(System.currentTimeMillis() >= time + 500))
+//        {
+//
+//        }
+//        time = System.currentTimeMillis();
+//        layout.doOneBrick();
         for(int row = 0; row < 40; row++)
         {
             for(int col = 0; col < 30; col++)
@@ -42,7 +42,7 @@ public class DrawPanel extends JPanel implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e)
     {
-
+        layout.doOneBrick();
     }
 
     @Override
