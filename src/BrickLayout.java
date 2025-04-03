@@ -28,22 +28,32 @@ public class BrickLayout {
         }
     }
 
-    public void doOneBrick() {
-        if (!bricks.isEmpty()) {
+    public void doOneBrick() { //not working
+        if (!bricks.isEmpty())
+        {
             Brick b = bricks.removeFirst();
             for(int row = 0; row < brickLayout.length; row++)
             {
-                if(row != brickLayout.length - 1)
+                if(row != brickLayout.length - 1) //if is not on bottom row
                 {
-                    for(int i = 0; i < b.getEnd() - b.getStart() + 1; i++)
+                    int[] belowArr = new int[b.getEnd() - b.getStart() + 1];
+                    for(int i = 0; i < belowArr.length; i++)
                     {
-                        if(brickLayout[row + 1][b.getStart() + i] == 1)
+                        belowArr[i] = brickLayout[row + 1][b.getStart() + i];
+                    }
+
+                    if(contains1(belowArr))
+                    {
+                        for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
                         {
-                            for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
-                            {
-                                brickLayout[row][b.getStart() + j] = 1;
-                            }
-                            return;
+                            brickLayout[row][b.getStart() + j] = 1;
+                        }
+                    }
+                    else
+                    {
+                        for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
+                        {
+                            brickLayout[row + 1][b.getStart() + j] = 1;
                         }
                     }
                 }
@@ -53,10 +63,83 @@ public class BrickLayout {
                     {
                         brickLayout[row][b.getStart() + j] = 1;
                     }
-                    break;
+                }
+                if(row != 0)
+                {
+                    for(int j = 0; j < b.getEnd() - b.getStart() + 1; j++)
+                    {
+                        brickLayout[row - 1][b.getStart() + j] = 0;
+                    }
                 }
             }
         }
+        for(int row = 0; row < brickLayout.length; row++)
+        {
+            for(int col = 0; col < brickLayout[0].length; col++)
+            {
+                System.out.print(brickLayout[row][col]);
+            }
+            System.out.println();
+        }
+    }
+
+    public void doOneBrickAndDrop()
+    {
+        for(int row = brickLayout.length - 2; row >= 0; row--) //iterate up 2d arr starting from 2nd to last row
+        {
+            for(int col = 0; col < brickLayout[0].length; col++) //iterates from left to right
+            {
+                if(brickLayout[row][col] == 1) //if beginning of brick detected
+                {
+                    int start = col;
+                    int length = 1;
+                    col++;
+                    while(brickLayout[row][col] == 1) //until end of brick detected
+                    {
+                        length++;
+                        col++;
+                    }
+
+                    int[] belowArr = new int[length];
+                    for(int i = 0; i < belowArr.length; i++) //get section 1 row below current section
+                    {
+                        belowArr[i] = brickLayout[row + 1][start + i];
+                    }
+
+                    if(!contains1(belowArr)) //drop brick
+                    {
+                        for(int i = 0; i < length; i++) //add 1s to where brick is to be moved
+                        {
+                            brickLayout[row + 1][start + i] = 1;
+                        }
+                        for(int i = 0; i < length; i++) //remove 1s where brick currently is located
+                        {
+                            brickLayout[row][start + i] = 0;
+                        }
+                    }
+                }
+            }
+        }
+        if (!bricks.isEmpty())
+        {
+            Brick b = bricks.removeFirst();
+            for (int i = 0; i < b.getEnd() - b.getStart() + 1; i++)
+            {
+                brickLayout[0][b.getStart() + i] = 1;
+            }
+        }
+    }
+
+    public static boolean contains1(int[] arr)
+    {
+        for(int i = 0; i < arr.length; i++)
+        {
+            if(arr[i] == 1)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<String> getFileData(String fileName) {
